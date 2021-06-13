@@ -18,11 +18,29 @@ public with sharing class CheckingOrderAndAccountFields {
            for(Account acc:accList){
                if(acc.Orders.size()==0){
                    acc.Active__c=false;
-                   
                }
            }
-           
                update accList;
            
+    }
+    public static void checkAccountRelatedList(List<Account> accs ){
+        List<Task> tskList=new List<Task>();
+        for(Account acc:accs){
+            if(acc.Tasks.size()==0 && acc.Orders.size()==0){
+                Task tsk = new Task();
+                tsk.Subject = 'Call';
+                tsk.Status = 'New';
+                tsk.Priority = 'Normal';
+                tsk.RecurrenceInterval = 5 ;
+                tsk.WhatId = acc.ID;
+                tsk.OwnerId = acc.OwnerId;
+                tskList.add(tsk);
+            }
+        }
+        if(tskList.size()>0){
+            insert tskList;
+
+        }
+        
     }
 }
