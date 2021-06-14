@@ -1,8 +1,7 @@
 public with sharing class CheckingOrderAndAccountFields {
-    public static void CheckingOrderItem(List<Order> newOrders, List<Order> oldOrders) {
-       integer i=0;
+    public static void CheckingOrderItem(List<Order> newOrders, Map<Id,Order> oldOrders) {
        for (Order o : newOrders ){
-            if (o.Status == 'Activated' && oldOrders[i].Status =='Draft' && o.Order_Item__c == 0 ){
+            if (o.Status == 'Activated' && oldOrders.get(o.Id).Status =='Draft' && o.OrderItems.size() == 0 ){
                 o.addError('Vous ne pouvez pas changer le statut !');
             }
        }
