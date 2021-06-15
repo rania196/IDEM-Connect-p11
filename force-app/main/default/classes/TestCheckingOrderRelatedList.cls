@@ -44,11 +44,13 @@ public with sharing class TestCheckingOrderRelatedList {
        }
         @isTest
        static void TestUncheckTheCustomField(){
-           Account acc = [SELECT Id,Active__c FROM Account Limit 1];
-           Order od = [SELECT id FROM Order Limit 1];
+           Order od = [SELECT id,AccountId FROM Order Limit 1];
+Id accId=od.AccountId;
            Test.startTest();
            Database.DeleteResult result = Database.delete(od);
            Test.stopTest();
+           Account acc = [SELECT Id,Active__c  FROM Account WHERE Id =:accId Limit 1];
+
           System.assertEquals(false, acc.Active__c);
           System.debug(acc.Active__c);
 
