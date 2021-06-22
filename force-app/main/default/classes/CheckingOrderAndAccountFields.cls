@@ -23,9 +23,11 @@ public with sharing class CheckingOrderAndAccountFields {
            
     }
     public static void checkAccountRelatedList(List<Account> accs ){
+        
         List<Task> tskList=new List<Task>();
+        
         for(Account acc:accs){
-            if(acc.Tasks.size()==0 && acc.Orders.size()==0){
+            if(acc.Tasks.size()==0 && acc.Orders.size()==0) {
                 Task tsk = new Task();
                 tsk.Subject = 'Call';
                 tsk.Status = 'New';

@@ -64,7 +64,7 @@ Id accId=od.AccountId;
        @isTest
        static void TestCheckAccountRelatedList(){
           List<Task> tsk = new List <Task>();
-           
+         
           Test.startTest();
           BatchProcessAcc uca = new BatchProcessAcc();
           Id batchId = Database.executeBatch(uca);
