@@ -30,9 +30,10 @@ public with sharing class CheckingOrderAndAccountFields {
                 tsk.Subject = 'Call';
                 tsk.Status = 'New';
                 tsk.Priority = 'Normal';
-                tsk.RecurrenceInterval = 5 ;
-                tsk.WhatId = acc.ID;
+               tsk.WhatId = acc.ID;
                 tsk.OwnerId = acc.OwnerId;
+                tsk.IsReminderSet = true;
+                tsk.ReminderDateTime = System.today().addDays(5);
                 tskList.add(tsk);
             }
         }

@@ -4,9 +4,17 @@ public with sharing class TestCheckingOrderRelatedList {
          List<Account> accountsTest = new List<Account>();
          List<Order> ordersTest = new List<Order>();
          List<OrderItem> orderItems = new List<OrderItem>();
-
+         List<Account> accountsWithoutOrder = new List<Account>();
+         for(integer i=0;i<100;i++){
+            Account acc = new Account(Name = 'Test22 Account ' + i);
+            acc.Active__c = false;
+            accountsWithoutOrder.add(acc);
+         }
+        
+        insert accountsWithoutOrder;
+        
          for(integer i=0;i<10;i++){
-            Account acc1 = new Account(Name = 'Test Account ' + i);
+            Account acc1 = new Account(Name = 'Test2 Account ' + i);
             acc1.Active__c = false;
             accountsTest.add(acc1);
          }
@@ -52,7 +60,19 @@ Id accId=od.AccountId;
            Account acc = [SELECT Id,Active__c  FROM Account WHERE Id =:accId Limit 1];
 
           System.assertEquals(false, acc.Active__c);
-          System.debug(acc.Active__c);
+       }
+       @isTest
+       static void TestCheckAccountRelatedList(){
+          List<Task> tsk = new List <Task>();
+           
+          Test.startTest();
+          BatchProcessAcc uca = new BatchProcessAcc();
+          Id batchId = Database.executeBatch(uca);
+          Test.stopTest();
+          tsk = [SELECT id FROM Task];
+
+          System.assertEquals(100, tsk.size());
+
 
        }
 }
